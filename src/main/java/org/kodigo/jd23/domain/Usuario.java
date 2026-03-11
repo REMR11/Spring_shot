@@ -3,6 +3,9 @@ package org.kodigo.jd23.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Hibernate
  */
@@ -18,10 +21,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idUsuario;
 
     @Column(nullable = false, unique = true,length = 255)
     private String nombre;
@@ -29,4 +31,9 @@ public class Usuario {
     @Column(nullable = false, unique = true,length = 255)
     private String email;
 
+    @Column(nullable = false, unique = true)
+    private int edad;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> producto = new ArrayList<>();
 }
