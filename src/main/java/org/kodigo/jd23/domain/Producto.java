@@ -22,6 +22,4 @@ public class Producto {
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-
-
 }
