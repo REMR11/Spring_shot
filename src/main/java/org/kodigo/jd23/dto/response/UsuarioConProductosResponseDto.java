@@ -6,6 +6,6 @@ public record UsuarioConProductosResponseDto(
         Long id,
         String nombre,
         String email,
-        List<ProductoResposeDto> productos
+        List<ProductoResponseDto> productos
         ) {
 }

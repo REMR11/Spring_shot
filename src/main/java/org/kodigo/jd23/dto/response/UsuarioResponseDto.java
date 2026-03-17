@@ -1,6 +1,6 @@
 package org.kodigo.jd23.dto.response;
 
-public record UsuarioResposeDto(
+public record UsuarioResponseDto(
    Long id,
    String nombre,
    String email

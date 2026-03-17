@@ -1,9 +1,17 @@
 package org.kodigo.jd23.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "productos")
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
