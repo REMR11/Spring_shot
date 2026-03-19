@@ -14,6 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByNombreContainingIgnoreCase(String nombre);
     Optional<Usuario> findByEmail(String email);
 
-    @Query("SELECT u FROM usuario u LEFT JOIN FETCH u.productos WHERE u.id = :id")
+    @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.producto WHERE u.idUsuario = :id")
     Optional<Usuario> findByIdWithProductos(@Param("id") Long id);
 }

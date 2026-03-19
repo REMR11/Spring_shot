@@ -1,6 +1,5 @@
-package org.kodigo.jd23.service;
+package org.kodigo.jd23.service.implement;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.kodigo.jd23.domain.Producto;
 import org.kodigo.jd23.domain.Usuario;
@@ -10,8 +9,11 @@ import org.kodigo.jd23.dto.request.UsuarioRequestDto;
 import org.kodigo.jd23.dto.response.ProductoResponseDto;
 import org.kodigo.jd23.dto.response.UsuarioConProductosResponseDto;
 import org.kodigo.jd23.dto.response.UsuarioResponseDto;
+import org.kodigo.jd23.exception.BadRequestException;
+import org.kodigo.jd23.exception.EntityNotFoundException;
 import org.kodigo.jd23.repository.ProductoRepository;
 import org.kodigo.jd23.repository.UsuarioRepository;
+import org.kodigo.jd23.service.interfaces.IUsuarioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UsuarioService {
+public class UsuarioService implements IUsuarioService {
     private final UsuarioRepository repository;
     private final ProductoRepository productoRepository;
 
@@ -41,14 +43,14 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDto crear(UsuarioRequestDto request){
-        Usuario usuario = new Usuario(null, request.nombre(), request.email());
+        Usuario usuario = new Usuario(request.nombre(), request.email());
         Usuario saved = repository.save(usuario);
         return toResponseDto(saved);
     }
 
     public UsuarioResponseDto actualizar(Long id, UsuarioRequestDto requestDto){
         if (!repository.existsById(id)){
-            throw new EntityNotFoundException("Usuario con id" + id + " no encontrado");
+            throw new BadRequestException("Usuario con id" + id + " no encontrado");
         }
         Usuario updated = new Usuario(id, requestDto.nombre(), requestDto.email());
         Usuario saved = repository.save(updated);
@@ -97,7 +99,7 @@ public class UsuarioService {
         if (!repository.existsById(usuarioId))
             throw new EntityNotFoundException("Usuario con id " + usuarioId + " no encontrado");
 
-        return productoRepository.findByUsuarioId(usuarioId).stream()
+        return productoRepository.findByUsuario_IdUsuario(usuarioId).stream()
                 .map(this::toProductoResponseDto)
                 .toList();
     }
